@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #lineGraph {
+            border: 1px solid #EEE;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="lineGraph" width="550" height="300"></canvas>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        var graph = document.getElementById('lineGraph');
+        var ctx = graph.getContext('2d');
+        var width = graph.width;
+        var height = graph.height;
+
+        var data = [50, 90, 70, 100, 100, 100];
+        var color = ['red', 'blue', 'yellow', 'green', 'skyblue', 'orange'];
+        var max = Math.max(...data);
+        var total = data.reduce((a, b) => a + b);
+        var lastPosition = 0;
+
+        for (var i = 0; i < data.length; i += 1) {
+            ctx.beginPath();
+            ctx.moveTo(width / 2, height / 2);
+            var currentSize = (data[i] / total) * (Math.PI * 2);
+            ctx.arc(width / 2, height / 2, height / 2, lastPosition, lastPosition + currentSize);
+            ctx.fillStyle = color[i];
+            ctx.lineTo(width / 2, height / 2);
+            ctx.fill();
+            lastPosition += currentSize;
+        }
+    </script>
+</body>
+</html>
